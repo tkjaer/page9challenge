@@ -14,7 +14,6 @@ import (
 
 func quickGuess(body string) (url string, status bool) {
     status = false
-    //re, _ := regexp.Compile(`src=\"(/incoming/.*IMAGE_ALTERNATES/p)(\d+)([\w/-]+)\"XX`)
     re, _ := regexp.Compile(`src=\"(/incoming/.*IMAGE_ALTERNATES/p)(\d+)([\w/-]+)\"`)
 
     match := re.FindStringSubmatch(string(body))
@@ -122,18 +121,15 @@ func main() {
         fmt.Println(url)
         os.Exit(1)
     }
-    //req.Header.Set("Host", "ekstrabladet.dk")
     req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36")
+
     resp, err := client.Do(req)
-
-
-    // Get the body html:
-    //resp, err := client.Get("https://ekstrabladet.dk/side9/")
     if err != nil {
         fmt.Println(url)
         os.Exit(1)
     }
     defer resp.Body.Close()
+
     body, err := ioutil.ReadAll(resp.Body)
     if err != nil {
         if verbose ==true {
